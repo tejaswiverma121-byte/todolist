@@ -1,3 +1,4 @@
+const baseURL = "http://localhost:3000";
 
 let input = document.getElementById("input");
 let addBtn = document.getElementById("addTaskBtn");
@@ -11,33 +12,30 @@ let currentTask = "";
 
 
 async function loadTasks() {
-  const res = await axios.get( "/alltask");
+  const res = await axios.get(baseURL + "/alltask");
   render(res.data);
 }
 
-async function completeTask(task) {
-  await axios.post("http://localhost:3000/updatedtask", {
-    task: task,
-    status: true
-  });
-
-  loadTasks();
-}
 
 addBtn.onclick = async () => {
   let task = input.value.trim();
   if (!task) return;
 
-  await axios.post("/addtask", { task });
+  await axios.post(baseURL + "/addtask", { task });
 
   input.value = "";
   loadTasks();
 };
 
 
+async function completeTask(task) {
+  await axios.post(baseURL + "/updatedtask", { task });
+  loadTasks();
+}
+
 
 async function deleteTask(task) {
-  await axios.post("/deleted", { task });
+  await axios.post(baseURL + "/deleted", { task });
   loadTasks();
 }
 
@@ -53,8 +51,9 @@ saveBtn.onclick = async () => {
   let newTask = editInput.value.trim();
   if (!newTask) return;
 
-  await axios.post( "/deleted", { task: currentTask });
-  await axios.post( "/addtask", { task: newTask });
+  // simulate update
+  await axios.post(baseURL + "/deleted", { task: currentTask });
+  await axios.post(baseURL + "/addtask", { task: newTask });
 
   editBox.classList.remove("active");
   loadTasks();
@@ -70,20 +69,43 @@ function render(tasks) {
     li.innerHTML = `
       <span>${t.status ? "✔ " : ""}${t.task}</span>
       <div>
-        <button onclick="completeTask('${t.task}')">✔</button>
-        <button onclick="editTask('${t.task}')">✏️</button>
-        <button onclick="deleteTask('${t.task}')">🗑</button>
+        <button class="complete">✔</button>
+        <button class="edit">✏️</button>
+        <button class="delete">🗑</button>
       </div>
     `;
 
-    // if completed → make green
+  
+    li.dataset.task = t.task;
+
+
     if (t.status) {
-      li.style.background = "#22c55e"; // green
+      li.style.background = "#22c55e";
       li.style.color = "black";
     }
 
     ul.appendChild(li);
   });
 }
+
+
+ul.addEventListener("click", async (e) => {
+  let li = e.target.closest("li");
+  if (!li) return;
+
+  let task = li.dataset.task;
+
+  if (e.target.classList.contains("complete")) {
+    await completeTask(task);
+  }
+
+  if (e.target.classList.contains("delete")) {
+    await deleteTask(task);
+  }
+
+  if (e.target.classList.contains("edit")) {
+    editTask(task);
+  }
+});
 
 loadTasks();
