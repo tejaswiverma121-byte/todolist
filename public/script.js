@@ -54,9 +54,6 @@ saveBtn.onclick = async () => {
 };
 
 
-/* =====================
-   RENDER (DOM)
-===================== */
 function render(tasks) {
   ul.innerHTML = "";
 
