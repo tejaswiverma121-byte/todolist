@@ -15,7 +15,14 @@ async function loadTasks() {
   render(res.data);
 }
 
+async function completeTask(task) {
+  await axios.post("http://localhost:3000/updatedtask", {
+    task: task,
+    status: true
+  });
 
+  loadTasks();
+}
 
 addBtn.onclick = async () => {
   let task = input.value.trim();
@@ -61,16 +68,18 @@ function render(tasks) {
     let li = document.createElement("li");
 
     li.innerHTML = `
-      <span>${t.task}</span>
+      <span>${t.status ? "✔ " : ""}${t.task}</span>
       <div>
+        <button onclick="completeTask('${t.task}')">✔</button>
         <button onclick="editTask('${t.task}')">✏️</button>
         <button onclick="deleteTask('${t.task}')">🗑</button>
       </div>
     `;
 
+    // if completed → make green
     if (t.status) {
-      li.style.textDecoration = "line-through";
-      li.style.opacity = "0.6";
+      li.style.background = "#22c55e"; // green
+      li.style.color = "black";
     }
 
     ul.appendChild(li);
