@@ -1,0 +1,20 @@
+[
+  {
+    "id": "4427a35f-89b9-49e9-ad6c-fd252a227a9e",
+    "task": "groceries",
+    "date": "Tue Apr 14 2026",
+    "status": true
+  },
+  {
+    "id": "25973d76-0a5d-430d-94f7-bede8d6ef27e",
+    "task": "bike clean ",
+    "date": "Tue Apr 14 2026",
+    "status": false
+  },
+  {
+    "id": "05d1a61b-f247-48ba-9e30-0e3d2d6cadb4",
+    "task": "washing",
+    "date": "Tue Apr 14 2026",
+    "status": false
+  }
+]

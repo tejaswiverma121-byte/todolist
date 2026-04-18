@@ -1,0 +1,148 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Advanced Todo App</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  color: white;
+}
+
+.container {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.input-box {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+input {
+  flex: 1;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+}
+
+button {
+  padding: 12px 16px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background: #3b82f6;
+  color: white;
+  transition: 0.3s;
+}
+
+button:hover {
+  transform: scale(1.05);
+  background: #2563eb;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(10px);
+  margin-bottom: 10px;
+  padding: 15px;
+  border-radius: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  animation: fadeIn 0.4s ease;
+}
+
+li.done {
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+
+.actions button {
+  margin-left: 5px;
+  background: #22c55e;
+}
+
+.actions button.delete {
+  background: #ef4444;
+}
+
+.actions button.edit {
+  background: #f59e0b;
+}
+
+.actions button:hover {
+  transform: scale(1.1);
+}
+
+.editbox {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  background: #1e293b;
+  padding: 20px;
+  border-radius: 15px;
+  width: 300px;
+  transition: 0.3s;
+}
+
+.editbox.active {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1>✨ Advanced Todo App</h1>
+
+  <div class="input-box">
+    <input type="text" id="input" placeholder="Enter a task..." />
+    <button id="addTaskBtn">Add</button>
+  </div>
+
+  <ul id="taskList"></ul>
+</div>
+
+<!-- Edit Modal -->
+<div class="editbox" id="editBox">
+  <input type="text" id="editInput" placeholder="Edit task" />
+  <button id="saveBtn">Save</button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
